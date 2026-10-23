@@ -2,9 +2,20 @@ import 'package:flutter/material.dart';
 import '../data/home_items.dart';
 import '../widgets/home_tile.dart';
 import 'coming_soon_screen.dart';
+import 'quiz_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
+  /// যেগুলো তৈরি হয়ে গেছে সেগুলো এখানে যোগ হবে; বাকি সব "কামিং সুন"
+  Widget _screenFor(HomeItem item) {
+    switch (item.id) {
+      case 'free_exam':
+        return QuizScreen(title: item.title, color: item.color);
+      default:
+        return ComingSoonScreen(item: item);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +58,7 @@ class HomeScreen extends StatelessWidget {
                   item: item,
                   onTap: () => Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (_) => ComingSoonScreen(item: item),
-                    ),
+                    MaterialPageRoute(builder: (_) => _screenFor(item)),
                   ),
                 );
               },
