@@ -26,9 +26,13 @@ jobs:
           channel: stable
           cache: true
 
-      # android/ ও web/ ফোল্ডার রিপোতে নেই, এখানে জেনারেট হবে
-      - name: Generate platform folders
-        run: flutter create . --platforms=android,web --org com.example.eduapp --project-name edu_app
+      # FIX: আগে `flutter create .` আমাদের lib/main.dart ওভাররাইট করে ডিফল্ট
+      # টেমপ্লেট বসিয়ে দিচ্ছিল। এখন আলাদা ফোল্ডারে বানিয়ে শুধু android/ ও web/ কপি করা হয়।
+      - name: Generate platform folders (without touching lib/)
+        run: |
+          flutter create --platforms=android,web --org com.example.eduapp --project-name edu_app _platform_tmp
+          cp -r _platform_tmp/android _platform_tmp/web .
+          rm -rf _platform_tmp
 
       - name: Android INTERNET permission + app name
         run: |
@@ -56,7 +60,7 @@ jobs:
   deploy-web:
     needs: build
     runs-on: ubuntu-latest
-    continue-on-error: true   # Pages চালু না থাকলেও APK বিল্ড ফেল হবে না
+    continue-on-error: true
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
