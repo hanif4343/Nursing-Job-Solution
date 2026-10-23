@@ -1,0 +1,11 @@
+.dart_tool/
+.packages
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+pubspec.lock
+.idea/
+*.iml
+# CI প্রতিবার android/ ও web/ ফোল্ডার নিজে বানায়
+android/
+web/
