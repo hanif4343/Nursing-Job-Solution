@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../data/home_items.dart';
+import '../store/screens/store_screen.dart';
 import '../widgets/home_tile.dart';
 import 'coming_soon_screen.dart';
 import 'quiz_screen.dart';
@@ -12,6 +13,8 @@ class HomeScreen extends StatelessWidget {
     switch (item.id) {
       case 'free_exam':
         return QuizScreen(title: item.title, color: item.color);
+      case 'buy_book':
+        return const BookStoreScreen();
       default:
         return ComingSoonScreen(item: item);
     }
